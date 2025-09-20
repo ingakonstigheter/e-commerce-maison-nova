@@ -5,7 +5,6 @@ import Link from "next/link";
 import React, { useState } from "react";
 import NavItems from "./nav-items";
 import GlobalSearchbar from "../globals/global-searchbar";
-import { userCartStore } from "@/lib/stores/cartStore";
 import CartSidebar from "./cart-sidebar";
 
 const NavMain = () => {
@@ -33,8 +32,7 @@ const NavMain = () => {
       <div
         className={`fixed top-0 left-0 h-full w-[200px] bg-white shadow-md z-50 transform transition-transform duration-300 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
+        }`}>
         <div className="flex justify-between items-center px-4 py-3 border-b">
           <button onClick={() => setIsOpen(false)}>
             <X />
@@ -60,8 +58,7 @@ const NavMain = () => {
         </span>
         <button
           className="cursor-pointer"
-          onClick={() => setCartIsOpen((prev) => !prev)}
-        >
+          onClick={() => setCartIsOpen((prev) => !prev)}>
           <ShoppingCart />
         </button>
         {/***Cart div */}

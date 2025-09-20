@@ -21,7 +21,6 @@ const CardCarousel = ({ cards }: CardItemProps) => {
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
-      const { clientWidth } = scrollRef.current;
       const firstCardWidth = scrollRef.current.children[0].clientWidth;
       const gap = 16;
 
@@ -39,8 +38,7 @@ const CardCarousel = ({ cards }: CardItemProps) => {
       </button>
       <div
         ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scrollbar-none snap-x snap-mandatory "
-      >
+        className="flex gap-4 overflow-x-auto scrollbar-none snap-x snap-mandatory ">
         {cards.map((card, idx) => (
           <div key={idx} className="snap-start">
             <FavouriteCard

@@ -10,7 +10,9 @@ export async function fetchProduct(id: string) {
 
     const data: ProductFull = await response.json();
     return data;
-  } catch (error) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function fetchSearchProduct(
@@ -30,7 +32,9 @@ export async function fetchSearchProduct(
     const data = await response.json();
     const products: ProductFull[] = data.products;
     return products;
-  } catch (error) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function fetchProductOfTypeCategory(
@@ -50,7 +54,9 @@ export async function fetchProductOfTypeCategory(
     const data = await response.json();
     const products: ProductFull[] = data.products;
     return products;
-  } catch (error) {}
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 export async function fetchAllProductsOfMultipleCategories(
@@ -75,5 +81,7 @@ export async function fetchAllProductsOfMultipleCategories(
       );
     }
     return productList;
-  } catch (error) {}
+  } catch (e) {
+    console.log(e);
+  }
 }

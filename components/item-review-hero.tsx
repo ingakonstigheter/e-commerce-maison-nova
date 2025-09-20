@@ -3,6 +3,12 @@ import ReviewScore from "./products/review-score";
 import Link from "next/link";
 import Carousel from "./carousel";
 import { fetchAllProductsOfMultipleCategories } from "@/lib/data/products";
+import { ReactNode } from "react";
+
+export interface SlideProps {
+  key: string | number;
+  content: ReactNode;
+}
 
 export default async function ItemWithReview({
   categories,
@@ -27,40 +33,42 @@ export default async function ItemWithReview({
             )
           : { comment: "No reviews yet", reviewerName: "Anonymous" };
 
-      return (
-        <article
-          key={prod.id}
-          className="flex flex-col md:flex-row gap-4 items-center justify-between w-3/4 mx-auto  p-6 rounded-lg mb-12 ">
-          <section className="flex flex-col gap-4 text-center md:text-left">
-            <ReviewScore
-              scoreOutOfFive={prod.rating}
-              nrOfReviews={prod.reviews.length}
-            />
-            <p className="text-3xl text-secondary italic">
-              "{bestReview.comment}"
-            </p>
-            <p className="font-semibold text-primary">
-              - {bestReview.reviewerName}
-            </p>
-            <p className="font-light underline decoration-secondary">
-              {prod.title}
-            </p>
-          </section>
-          <section className="flex-shrink-0">
-            <Link href={`/products/${prod.id}`}>
-              <Image
-                src={prod.images[0]}
-                alt={prod.title}
-                width={600}
-                height={600}
-                className="rounded-lg object-cover w-full md:w-[600px] h-auto bg-foreground"
+      return {
+        key: prod.id,
+        content: (
+          <article
+            key={prod.id}
+            className="flex flex-col md:flex-row gap-4 items-center justify-between w-3/4 mx-auto  p-6 rounded-lg mb-12 ">
+            <section className="flex flex-col gap-4 text-center md:text-left">
+              <ReviewScore
+                scoreOutOfFive={prod.rating}
+                nrOfReviews={prod.reviews.length}
               />
-            </Link>
-          </section>
-        </article>
-      );
+              <p className="text-3xl text-secondary italic">
+                {`"${bestReview.comment}"`}
+              </p>
+              <p className="font-semibold text-primary">
+                {`- ${bestReview.reviewerName}`}
+              </p>
+              <p className="font-light underline decoration-secondary">
+                {prod.title}
+              </p>
+            </section>
+            <section className="flex-shrink-0">
+              <Link href={`/products/${prod.id}`}>
+                <Image
+                  src={prod.images[0]}
+                  alt={prod.title}
+                  width={600}
+                  height={600}
+                  className="rounded-lg object-cover w-full md:w-[600px] h-auto bg-foreground"
+                />
+              </Link>
+            </section>
+          </article>
+        ),
+      };
     });
-
     return (
       <div className="hidden md:block">
         <Carousel slides={slides} />

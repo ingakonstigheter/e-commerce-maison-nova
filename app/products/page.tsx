@@ -118,7 +118,7 @@ export default async function ProductsPage({
 
   /* if is a valid category ie men | women,  */
   if (validCategory(category)) {
-    let categories = category === "men" ? menCategories : womenCategories;
+    const categories = category === "men" ? menCategories : womenCategories;
     if (categories.includes(subcategory)) {
       const result = await fetchProductOfTypeCategory(
         subcategory,

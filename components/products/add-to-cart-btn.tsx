@@ -1,6 +1,6 @@
 "use client";
 
-import { CartProduct, ProductFull } from "@/lib/interfaces";
+import { ProductFull } from "@/lib/interfaces";
 import { userCartStore } from "@/lib/stores/cartStore";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
@@ -30,25 +30,16 @@ const AddToCartBtn = ({ product }: AddToCartBtnProps) => {
     setTimeout(() => setIsAdded(false), 2000);
   };
 
-  // console.log(cart)
-
-  //   // Check if any products is localStorage, else create an empty array and add product top cart.
-  //   let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  //   cart.push(cartProduct);
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  //};
   return (
     <motion.button
       animate={{ backgroundColor: isAdded ? "#22c55e" : "#111827" }}
       transition={{ duration: 0.3 }}
       className="relative w-full h-12 overflow-hidden text-center bg-gray-900 text-background shadow tracking-wider uppercase cursor-pointer"
-      onClick={handleClick}
-    >
+      onClick={handleClick}>
       <motion.span
         animate={{ y: isAdded ? -4 : 0, opacity: isAdded ? 0 : 1 }}
         transition={{ duration: 0.3 }}
-        className="block"
-      >
+        className="block">
         Add to cart
       </motion.span>
       <AnimatePresence>
@@ -58,8 +49,7 @@ const AddToCartBtn = ({ product }: AddToCartBtnProps) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex items-center justify-center"
-          >
+            className="absolute inset-0 flex items-center justify-center">
             <Check size={20} />
           </motion.span>
         )}

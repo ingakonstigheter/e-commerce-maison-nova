@@ -21,7 +21,7 @@ const FavouriteCard = ({
       <div className="relative w-60 aspect-5/7 flex flex-col">
         <Image
           src={imageSrc}
-          alt="white t-shirt"
+          alt={altText}
           className="object-cover"
           fill
           priority
