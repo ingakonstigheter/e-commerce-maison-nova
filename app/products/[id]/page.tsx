@@ -38,8 +38,10 @@ export async function generateStaticParams() {
   if (result) {
     const allProducts = result;
     return allProducts.map((product) => ({
-      slug: product.id,
+      id: product.id.toString(),
     }));
+  } else {
+    return [];
   }
 }
 

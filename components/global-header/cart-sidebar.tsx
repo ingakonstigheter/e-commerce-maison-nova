@@ -2,10 +2,6 @@ import React from "react";
 import { Minus, Plus, Trash2, X } from "lucide-react";
 import { userCartStore } from "@/lib/stores/cartStore";
 import Image from "next/image";
-import { log } from "console";
-import { div, p } from "framer-motion/client";
-
-const EXPIRATION_TIME = 12 * 60 * 60 * 1000; // 12 hours in milliseconds
 
 interface CartSidebarProps {
   cartIsOpen: boolean;
@@ -17,7 +13,6 @@ const CartSidebar = ({ cartIsOpen, setCartIsOpen }: CartSidebarProps) => {
   const removeFromCart = userCartStore((state) => state.removeFromCart);
   const incrementCartItem = userCartStore((state) => state.incrementCartItem);
   const decrementCartItem = userCartStore((state) => state.decrementCartItem);
-  console.log("Cart: ", cartList);
 
   return (
     <div
