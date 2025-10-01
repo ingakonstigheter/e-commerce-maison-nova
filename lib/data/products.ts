@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { Product, ProductSort, TProductFilters } from "../zod-schemas";
 
 function mapProduct(product: any): Product {
@@ -16,19 +16,19 @@ function mapProduct(product: any): Product {
   };
 }
 
-export async function fetchProduct(slug: string): Promise<Product | null> {
+export async function fetchProduct(
+  slug: string
+): Promise<
+  { success: boolean; data: Product } | { success: boolean; data: any }
+> {
   try {
     const product = await prisma.product.findUnique({
       where: { slug: slug },
       include: { review: true },
     });
-
-    if (!product) return null;
-
-    return mapProduct(product);
+    return { success: true, data: mapProduct(product) };
   } catch (error) {
-    console.error(error);
-    return null;
+    return { success: false, data: error };
   }
 }
 
@@ -110,7 +110,6 @@ export async function fetchProducts(
 
     return products.map((product) => mapProduct(product));
   } catch (error) {
-    console.error("Error fetching products", error);
     return [];
   }
 }

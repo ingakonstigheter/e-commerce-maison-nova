@@ -14,7 +14,7 @@ export default async function ItemWithReview({
   if (allProducts) {
     // Ta de fyra bästa
     const topProducts = allProducts
-      .sort((a, b) => b.rating - a.rating)
+      .sort((a, b) => b.rating! - a.rating!)
       .slice(0, 4);
 
     // Skapa slides: ett stort kort per slide
@@ -33,8 +33,8 @@ export default async function ItemWithReview({
           className="flex flex-col md:flex-row gap-4 items-center justify-between w-3/4 mx-auto  p-6 rounded-lg mb-12 ">
           <section className="flex flex-col gap-4 text-center md:text-left">
             <ReviewScore
-              scoreOutOfFive={prod.rating}
-              nrOfReviews={prod.reviews.length}
+              scoreOutOfFive={prod.rating!}
+              nrOfReviews={prod.reviews?.length!}
             />
             <p className="text-3xl text-secondary italic">
               "{bestReview.comment}"

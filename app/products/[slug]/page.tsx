@@ -11,16 +11,17 @@ import AddToCartBtn from "@/components/products/add-to-cart-btn";
 import { URLProps } from "@/lib/interfaces";
 import ProductPrice from "@/components/products/product-price";
 import DiscountTag from "@/components/products/discount-tag";
-
+import { Product } from "@/lib/zod-schemas";
+/* 
 export async function generateMetadata({ params }: URLProps) {
   const { slug } = await params;
 
   if (slug) {
-    const product = await fetchProduct(slug);
-    if (product) {
+    const result = await fetchProduct(slug);
+    if (result?.success) {
       return {
-        title: `Maison Nova - ${product.title}`,
-        description: `Detailed product information about: ${product.title}`,
+        title: `Maison Nova - ${result.data.title}`,
+        description: `Detailed product information about: ${result.data.title}`,
       };
     }
   }
@@ -39,22 +40,19 @@ export async function generateStaticParams() {
       slug: product.slug,
     }));
   }
-}
+} */
 
 export default async function Page({ params, searchParams }: URLProps) {
   const { slug } = await params;
   const { sort } = await searchParams;
 
-  if (!slug) {
+  const result = await fetchProduct(slug);
+
+  if (!result.success) {
+    console.log(result?.data);
     return notFound();
   }
-
-  const product = await fetchProduct(slug);
-
-  if (!product) {
-    return notFound();
-  }
-
+  const product: Product = result.data;
   /* Display decmials if price is under 1000 */
   const showDecimals = product.price > 1000 ? 0 : 2;
   /* Display the images in two columns if the product have two or more images */
@@ -86,10 +84,10 @@ export default async function Page({ params, searchParams }: URLProps) {
             <div className=" flex justify-between border-b-1 pb-8">
               <div>
                 <h2>{product.title}</h2>
-                {product.reviews ? (
+                {product.reviews && product.rating ? (
                   <ReviewScore
                     nrOfReviews={product.reviews.length}
-                    scoreOutOfFive={product.rating!}></ReviewScore>
+                    scoreOutOfFive={product.rating}></ReviewScore>
                 ) : (
                   <ReviewScore nrOfReviews={0} scoreOutOfFive={0}></ReviewScore>
                 )}

@@ -101,9 +101,9 @@ export interface BannerWrapperProps {
 
 export interface User {
   user_id: number;
-  name: String;
-  email: String;
-  roles: String[];
+  name: string;
+  email: string;
+  roles: string[];
   createdAt: Date;
   updatedAt: Date;
 }

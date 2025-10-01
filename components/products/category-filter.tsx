@@ -34,7 +34,7 @@ export default function CategoryFilter({ gender }: { gender: string }) {
           className={`border-1 text-sm h-min px-2 py-1 w-max nowrap rounded shadow${
             paramCategory === link ? isActive : ""
           }`}>
-          {link}
+          {link.replace("-", " ")}
         </Link>
       ))}
     </div>

@@ -77,7 +77,6 @@ const AccountForm = ({ user }: { user: User | null }) => {
     <div className="p-8 flex flex-col h-full bg-[#f5f4f7] rounded-3xl">
       <h2 className="mb-4 text-3xl font-bold">Account Settings</h2>
       <div className="form-widget w-[400px] flex flex-col gap-5">
-        {/* ... */}
         <div className="flex flex-col gap-1 font-semibold">
           <label htmlFor="email">Email</label>
           <input
@@ -119,7 +118,6 @@ const AccountForm = ({ user }: { user: User | null }) => {
             className="py-3 px-6 bg-white rounded-md shadow-md font-medium"
           />
         </div>
-        {/* <div> */}
 
         <button
           className="button px-8 py-2 mt-6 w-fit bg-amber-200 rounded-full font-semibold cursor-pointer"
@@ -129,7 +127,6 @@ const AccountForm = ({ user }: { user: User | null }) => {
           disabled={loading}>
           {loading ? "Loading ..." : "Update"}
         </button>
-        {/* </div> */}
       </div>
     </div>
   );
