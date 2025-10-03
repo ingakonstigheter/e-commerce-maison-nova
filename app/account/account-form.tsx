@@ -23,7 +23,6 @@ const AccountForm = ({ user }: { user: User | null }) => {
         .single();
 
       if (error && status !== 406) {
-        console.log(error);
         throw error;
       }
 

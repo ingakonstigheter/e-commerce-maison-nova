@@ -13,7 +13,7 @@ export default function ReviewScore({
       <Stars scoreOutOfFive={scoreOutOfFive}></Stars>
       <div className="ml-20 flex gap-1">
         <p>{`(${scoreOutOfFive.toFixed(1)})`} </p>
-        <p className="">{`${nrOfReviews} Reviews`}</p>
+        <p>{`${nrOfReviews} Reviews`}</p>
       </div>
     </div>
   );

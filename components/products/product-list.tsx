@@ -1,13 +1,13 @@
 import React from "react";
 import ProductCard from "./product-card";
-import { ProductFull } from "@/lib/interfaces";
 import ProductPagnation from "./product-pagnation";
+import { Product } from "@/lib/zod-schemas";
 
 export default async function ProductList({
   productList,
   pages,
 }: {
-  productList: ProductFull[];
+  productList: Product[];
   pages: number;
 }) {
   return (

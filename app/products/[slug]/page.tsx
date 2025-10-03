@@ -1,14 +1,9 @@
-import {
-  fetchAllProductsOfMultipleCategories,
-  fetchProduct,
-  fetchProductBySlug,
-} from "@/lib/data/products";
+import { fetchProduct, fetchProducts } from "@/lib/data/products";
 import { notFound } from "next/navigation";
 import React from "react";
 import Image from "next/image";
 import ReviewScore from "@/components/products/review-score";
 import { Box, Gift, Truck } from "lucide-react";
-import { allCategories, MIN_DISCOUNT_TO_DISPLAY } from "@/lib/constants";
 import ReviewList from "@/components/products/review-list";
 import Stars from "@/components/stars";
 import RatingBarChart from "@/components/products/rating-bar-chart";
@@ -21,7 +16,7 @@ export async function generateMetadata({ params }: URLProps) {
   const { slug } = await params;
 
   if (slug) {
-    const product = await fetchProductBySlug(slug);
+    const product = await fetchProduct(slug);
     if (product) {
       return {
         title: `Maison Nova - ${product.title}`,
@@ -36,12 +31,12 @@ export async function generateMetadata({ params }: URLProps) {
 }
 
 export async function generateStaticParams() {
-  const result = await fetchAllProductsOfMultipleCategories(allCategories);
+  const result = await fetchProducts();
 
   if (result) {
     const allProducts = result;
     return allProducts.map((product) => ({
-      slug: product.id,
+      slug: product.slug,
     }));
   }
 }
@@ -72,7 +67,9 @@ export default async function Page({ params, searchParams }: URLProps) {
           {/* Images */}
           <figure
             className={`grid ${imageGrid} lg:grid-cols-1 lg:h-[1000px] overflow-auto gap-2 relative lg:mx-auto`}>
-            <DiscountTag discount={product.discountPercentage}></DiscountTag>
+            {product.discountPercentage && (
+              <DiscountTag discount={product.discountPercentage}></DiscountTag>
+            )}
             {product.images.map((image, index) => (
               <Image
                 key={index}
@@ -89,12 +86,16 @@ export default async function Page({ params, searchParams }: URLProps) {
             <div className=" flex justify-between border-b-1 pb-8">
               <div>
                 <h2>{product.title}</h2>
-                <ReviewScore
-                  nrOfReviews={product.reviews.length}
-                  scoreOutOfFive={product.rating}></ReviewScore>
+                {product.reviews ? (
+                  <ReviewScore
+                    nrOfReviews={product.reviews.length}
+                    scoreOutOfFive={product.rating!}></ReviewScore>
+                ) : (
+                  <ReviewScore nrOfReviews={0} scoreOutOfFive={0}></ReviewScore>
+                )}
               </div>
               <ProductPrice
-                discount={product.discountPercentage}
+                discount={product.discountPercentage ?? 0}
                 price={product.price}></ProductPrice>
             </div>
             {/* Decsription */}
@@ -148,19 +149,25 @@ export default async function Page({ params, searchParams }: URLProps) {
 
         <div className="grid md:flex gap-16 justify-center md:block-flex bg-foreground p-16 ">
           <div className="grid content-start justify-center gap-4">
-            <p className="font-semibold wrap-pretty">{`${product.rating.toFixed(
-              1
-            )} Overall Rating`}</p>
-            <Stars scoreOutOfFive={product.rating} starCn="size-6"></Stars>
+            <p className="font-semibold wrap-pretty">{`${
+              product.rating?.toFixed(1) ?? 0
+            } Overall Rating`}</p>
+            {product.rating && (
+              <Stars scoreOutOfFive={product.rating} starCn="size-6"></Stars>
+            )}
           </div>
 
-          <RatingBarChart
-            numbers={product.reviews.map(
-              (review) => review.rating
-            )}></RatingBarChart>
+          {product.reviews ? (
+            <RatingBarChart
+              numbers={product.reviews.map(
+                (review) => review.rating
+              )}></RatingBarChart>
+          ) : (
+            <RatingBarChart numbers={[0]}></RatingBarChart>
+          )}
         </div>
 
-        <ReviewList sort={sort} reviews={product.reviews}></ReviewList>
+        <ReviewList sort={sort} reviews={product.reviews ?? []}></ReviewList>
       </section>
     </>
   );

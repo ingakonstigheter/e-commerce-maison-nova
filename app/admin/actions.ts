@@ -4,17 +4,16 @@ import { generateSlug, parseCommaSeparareted } from "@/lib/utils";
 import { Product, productSchema } from "@/lib/zod-schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import {z} from "zod"
+import { z } from "zod";
 
 export async function createNewProduct(
   prevState: unknown,
   formData: FormData
 ): Promise<{
-  validationErrors: Record<string, string[]>
+  validationErrors: Record<string, string[]>;
   data: Omit<Product, "reviews" | "id" | "slug">;
   dbError: string;
 } | null> {
-
   const priceString = formData.get("price") as string;
   const product: Omit<Product, "reviews" | "id" | "slug"> = {
     title: formData.get("title") as string,
@@ -26,20 +25,19 @@ export async function createNewProduct(
     images: parseCommaSeparareted(formData.get("images") as string),
     thumbnail: formData.get("thumbnail") as string,
   };
-  const newProductSchema = productSchema.partial({id: true, slug: true})
+  const newProductSchema = productSchema.partial({ id: true, slug: true });
   const result = newProductSchema.safeParse(product);
-  
+
   if (!result.success) {
     const errors = z.flattenError(result.error);
-    console.log(errors);
-    
+
     return {
       validationErrors: errors.fieldErrors,
       data: product,
-      dbError: ""
+      dbError: "",
     };
   }
-  console.log(await createProduct(product));
+  await createProduct(product);
   revalidatePath("/");
   redirect(`/admin/admin-products`);
 }
@@ -48,11 +46,10 @@ export async function updateOldProduct(
   prevState: unknown,
   formData: FormData
 ): Promise<{
-  validationErrors: Record<string, string[]>
-  data: Omit<Product, "reviews" >;
+  validationErrors: Record<string, string[]>;
+  data: Omit<Product, "reviews">;
   dbError: string;
 } | null> {
-
   const idString = formData.get("id") as string;
   const priceString = formData.get("price") as string;
   const product: Omit<Product, "reviews"> = {
@@ -69,16 +66,16 @@ export async function updateOldProduct(
     rating: null,
     discountPercentage: null,
   };
-  
+
   const result = productSchema.safeParse(product);
-  
+
   if (!result.success) {
     const errors = z.flattenError(result.error);
-    
+
     return {
       validationErrors: errors.fieldErrors,
       data: product,
-      dbError: ""
+      dbError: "",
     };
   }
   await updateProduct(product);

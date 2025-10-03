@@ -1,3 +1,4 @@
+import DeleteButton from "@/components/products/delete-button";
 import { fetchAllProducts } from "@/lib/data/products";
 import Link from "next/link";
 import React from "react";
@@ -27,11 +28,7 @@ export default async function Page() {
               <p>{product.id}</p>
               <p className="w-full ">{product.title}</p>
               <div className="grid sm:flex gap-2">
-                <Link
-                  className="border rounded px-2 h-min bg-destructive text-background font-bold"
-                  href={""}>
-                  Delete
-                </Link>
+                <DeleteButton productId={product.id}></DeleteButton>
                 <Link
                   className="border rounded h-min px-2"
                   href={`/admin/admin-products/${product.slug}`}>

@@ -10,12 +10,15 @@ const AddToCartBtn = ({ product }: AddToCartBtnProps) => {
   const addToCart = userCartStore((state) => state.addToCart);
 
   const [isAdded, setIsAdded] = useState(false);
-
+  let discount = product.discountPercentage;
+  if (!discount) {
+    discount = 0;
+  }
   const cartProduct = {
     id: product.id,
     title: product.title,
     price: product.price,
-    discountPercentage: product.discountPercentage,
+    discountPercentage: discount,
     image: product.images[0],
   };
 
@@ -26,13 +29,6 @@ const AddToCartBtn = ({ product }: AddToCartBtnProps) => {
     setTimeout(() => setIsAdded(false), 2000);
   };
 
-  // console.log(cart)
-
-  //   // Check if any products is localStorage, else create an empty array and add product top cart.
-  //   let cart = JSON.parse(localStorage.getItem("cart") || "[]");
-  //   cart.push(cartProduct);
-  //   localStorage.setItem("cart", JSON.stringify(cart));
-  //};
   return (
     <motion.button
       animate={{ backgroundColor: isAdded ? "#22c55e" : "#111827" }}

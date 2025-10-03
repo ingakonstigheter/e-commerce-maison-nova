@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export default async function Page({ params }: Props) {
-  const {slug} = await params;
+  const { slug } = await params;
 
   if (!slug) {
     redirect("/admin/admin-products");
@@ -21,10 +21,12 @@ export default async function Page({ params }: Props) {
     const product = await fetchProductBySlug(slug);
     if (!product) {
       return (
-        <>
-          <p className="text-destructive">Product not found</p>
-          <Link href={"/admin/admin-products"}>Return</Link>
-        </>
+        <div className="w-full">
+          <Link href={"/admin/admin-products"} className="border px-4 ">
+            Return
+          </Link>
+          <p className="text-destructive bold">Product not found</p>
+        </div>
       );
     }
     return <ProductForm product={product}></ProductForm>;

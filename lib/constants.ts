@@ -64,64 +64,57 @@ export const menCategories = [
 ];
 
 export const productSortList: SortData[] = [
-  { title: "Recommended", value: "recommended", key: "", type: "" },
-  { title: "Name: A to Z", value: "name-asc", key: "title", type: "asc" },
+  { title: "Recommended", sortBy: "recommended", key: "", order: "" },
+  {
+    title: "Name: A to Z",
+    sortBy: "title",
+    order: "asc",
+    key: "title",
+  },
   {
     title: "Name: Z to A",
-    value: "name-desc",
+    sortBy: "title",
+    order: "desc",
     key: "title",
-    type: "desc",
   },
   {
     title: "Price: low to high",
-    value: "price-asc",
+    sortBy: "price",
+    order: "asc",
     key: "price",
-    type: "asc",
   },
   {
     title: "Price: high to low",
-    value: "price-desc",
+    sortBy: "price",
+    order: "desc",
     key: "price",
-    type: "desc",
   },
   {
     title: "Rating: low to high",
-    value: "rating-asc",
+    sortBy: "rating",
+    order: "asc",
     key: "rating",
-    type: "asc",
   },
   {
     title: "Rating: high to low",
-    value: "rating-desc",
+    sortBy: "rating",
     key: "rating",
-    type: "desc",
-  },
-  {
-    title: "Discount: low to high",
-    value: "discount-asc",
-    key: "discountPercentage",
-    type: "asc",
-  },
-  {
-    title: "Discount: high to low",
-    value: "discount-desc",
-    key: "discountPercentage",
-    type: "desc",
+    order: "desc",
   },
 ];
 
 export const reviewSortList: SortData[] = [
   {
     title: "Stars: high to low",
-    value: "rating-desc",
+    sortBy: "rating-desc",
     key: "stars",
-    type: "desc",
+    order: "desc",
   },
   {
     title: "Stars: low to high",
-    value: "rating-asc",
+    sortBy: "rating-asc",
     key: "stars",
-    type: "asc",
+    order: "asc",
   },
 ];
 
@@ -136,4 +129,4 @@ export const MIN_DISCOUNT_TO_DISPLAY = 10;
 export const PAGE_OFFSET = 9;
 
 // 12 hours in milliseconds
-export const EXPIRATION_TIME = 12 * 60 * 60 * 1000; 
+export const EXPIRATION_TIME = 12 * 60 * 60 * 1000;

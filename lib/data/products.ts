@@ -1,8 +1,7 @@
-import { ProductFull } from "../interfaces";
-import prisma from "../prisma";
-import { Product } from "../zod-schemas";
+import prisma from "@/lib/prisma";
+import { Product, ProductSort, TProductFilters } from "../zod-schemas";
 
-function mapProduct(product: any): ProductFull {
+function mapProduct(product: any): Product {
   return {
     ...product,
     reviews: product.review.map((r: any) => ({
@@ -17,10 +16,10 @@ function mapProduct(product: any): ProductFull {
   };
 }
 
-export async function fetchProduct(id: string): Promise<ProductFull | null> {
+export async function fetchProduct(slug: string): Promise<Product | null> {
   try {
     const product = await prisma.product.findUnique({
-      where: { id: Number(id) },
+      where: { slug: slug },
       include: { review: true },
     });
 
@@ -33,51 +32,9 @@ export async function fetchProduct(id: string): Promise<ProductFull | null> {
   }
 }
 
-export async function fetchSearchProduct(
-  query: string,
-  sortBy: string,
-  order: string
-): Promise<ProductFull[]> {
-  try {
-    const products = await prisma.product.findMany({
-      where: { title: { contains: query, mode: "insensitive" } },
-      orderBy: sortBy
-        ? { [sortBy]: order === "desc" ? "desc" : "asc" }
-        : undefined,
-      include: { review: true },
-    });
-
-    return products.map(mapProduct);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-export async function fetchProductOfTypeCategory(
-  category: string,
-  sortBy: string,
-  order: string
-): Promise<ProductFull[]> {
-  try {
-    const products = await prisma.product.findMany({
-      where: { category },
-      orderBy: sortBy
-        ? { [sortBy]: order === "desc" ? "desc" : "asc" }
-        : undefined,
-      include: { review: true },
-    });
-
-    return products.map(mapProduct);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
 export async function fetchAllProductsOfMultipleCategories(
   categories: string[]
-): Promise<ProductFull[]> {
+): Promise<Product[]> {
   try {
     const products = await prisma.product.findMany({
       where: { category: { in: categories } },
@@ -91,7 +48,7 @@ export async function fetchAllProductsOfMultipleCategories(
   }
 }
 
-export async function fetchAllProducts() {
+export async function fetchAllProducts(): Promise<Product[] | null> {
   const products = await prisma.product.findMany();
 
   if (!products) {
@@ -100,7 +57,9 @@ export async function fetchAllProducts() {
   return products;
 }
 
-export async function fetchProductBySlug(slug: string) {
+export async function fetchProductBySlug(
+  slug: string
+): Promise<Product | null> {
   if (!slug) return null;
   const product = await prisma.product.findUnique({
     where: { slug: slug },
@@ -109,82 +68,49 @@ export async function fetchProductBySlug(slug: string) {
   if (product) {
     return product;
   }
+  return null;
 }
 
-// export async function fetchProduct(id: string) {
-//   try {
-//     const response = await fetch(`https://dummyjson.com/products/${id}`);
+export async function fetchProducts(
+  filters: TProductFilters = {},
+  sort: ProductSort = {}
+): Promise<Product[]> {
+  try {
+    const where: any = {};
 
-//     if (!response.ok) {
-//       throw new Error(`There was an error fetching a product with id: ${id}`);
-//     }
+    if (filters.query) {
+      where.title = { contains: filters.query, mode: "insensitive" };
+    }
+    if (filters.category) {
+      where.category = filters.category;
+    }
+    if (filters.gender !== "all") {
+      where.gender = filters.gender;
+    }
 
-//     const data: ProductFull = await response.json();
-//     return data;
-//   } catch (error) {}
-// }
+    if (filters.min || filters.max) {
+      where.price = {};
+      if (filters.min) where.price.gte = parseInt(filters.min);
+      if (filters.max) where.price.lte = parseInt(filters.max);
+    }
 
-// export async function fetchSearchProduct(
-//   query: string,
-//   sortBy: string,
-//   order: string
-// ) {
-//   try {
-//     const response = await fetch(
-//       `https://dummyjson.com/products/search?q=${query}&sortBy=${sortBy}&order=${order}`
-//     );
+    if (filters.ratingMin) {
+      where.rating = { gte: parseInt(filters.ratingMin) };
+    }
 
-//     if (!response.ok) {
-//       throw new Error(`There was an error searching for products`);
-//     }
+    const orderBy = sort.sortBy
+      ? { [sort.sortBy]: sort.order === "desc" ? "desc" : "asc" }
+      : undefined;
 
-//     const data = await response.json();
-//     const products: ProductFull[] = data.products;
-//     return products;
-//   } catch (error) {}
-// }
+    const products = await prisma.product.findMany({
+      where,
+      orderBy,
+      include: { review: true },
+    });
 
-// export async function fetchProductOfTypeCategory(
-//   category: string,
-//   sortBy: string,
-//   order: string
-// ) {
-//   try {
-//     const response = await fetch(
-//       `https://dummyjson.com/products/category/${category}?sortBy=${sortBy}&order=${order}`
-//     );
-
-//     if (!response.ok) {
-//       throw new Error(`There was an error fetching all products by category`);
-//     }
-
-//     const data = await response.json();
-//     const products: ProductFull[] = data.products;
-//     return products;
-//   } catch (error) {}
-// }
-
-// export async function fetchAllProductsOfMultipleCategories(
-//   categories: string[]
-// ) {
-//   try {
-//     let productList: ProductFull[] = [];
-//     const result = await Promise.all(
-//       /* returns array of produlist */
-//       categories.map(async (category) => {
-//         const result = await fetchProductOfTypeCategory(category, "", "");
-//         /* returns empty array if result is undefined */
-//         return Array.isArray(result) ? result : [];
-//       })
-//     );
-//     if (result) {
-//       /* flattens the result from fetching categories */
-//       productList = result.flat();
-//     } else {
-//       throw new Error(
-//         `There was a problem fetching all products of multiple categories`
-//       );
-//     }
-//     return productList;
-//   } catch (error) {}
-// }
+    return products.map((product) => mapProduct(product));
+  } catch (error) {
+    console.error("Error fetching products", error);
+    return [];
+  }
+}

@@ -6,7 +6,7 @@ import Searchbar from "../globals/searchbar";
 import CategoryFilter from "./category-filter";
 import AllProductsLink from "./all-products-link";
 
-export default function ProductFilters({ category }: { category: string }) {
+export default function ProductFilters({ gender }: { gender: string }) {
   const starRating = [1, 2, 3, 4, 5];
   const priceOptions = [
     { prompt: "Max Price", value: "max" },
@@ -45,8 +45,8 @@ export default function ProductFilters({ category }: { category: string }) {
     <div className="p-8 border-2 grid gap-2 py-4 text-xl">
       <Searchbar globalSearch={false}></Searchbar>
       <AllProductsLink
-        category={paramCategory ? paramCategory : ""}></AllProductsLink>
-      <CategoryFilter category={category}></CategoryFilter>
+        gender={paramCategory ? paramCategory : ""}></AllProductsLink>
+      <CategoryFilter gender={gender}></CategoryFilter>
 
       <form
         onSubmit={handleSubmit}

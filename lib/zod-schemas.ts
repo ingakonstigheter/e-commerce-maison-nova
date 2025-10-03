@@ -24,5 +24,24 @@ export const productSchema = z.object({
   reviews: z.array(reviewSchema).optional().nullable(),
 });
 
-export type Review = z.infer<typeof reviewSchema>;
+const SortByEnum = z.enum(["price", "rating", "title"]);
+
+export const QueryParamsSchema = z.object({
+  query: z.string().optional(),
+  gender: z.enum(["men", "women", "all"]).optional(),
+  category: z.string().optional(),
+  min: z.string().optional(),
+  max: z.string().optional(),
+  ratingMin: z.string().optional(),
+  sortBy: SortByEnum.nullable().optional(),
+  order: z.enum(["asc", "desc"]).nullable().optional(),
+});
+
 export type Product = z.infer<typeof productSchema>;
+export type Review = z.infer<typeof reviewSchema>;
+export type QueryParams = z.infer<typeof QueryParamsSchema>;
+export type TProductFilters = Omit<QueryParams, "sortBy" | "order">;
+export type ProductSort = {
+  sortBy?: z.infer<typeof SortByEnum> | null;
+  order?: "asc" | "desc" | null;
+};

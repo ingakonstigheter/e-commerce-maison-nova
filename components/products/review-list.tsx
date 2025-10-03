@@ -1,4 +1,3 @@
-import { ProductFull } from "@/lib/interfaces";
 import React from "react";
 import Stars from "../stars";
 import {
@@ -9,15 +8,16 @@ import {
 import { CircleCheck } from "lucide-react";
 import SortOptions from "./sort-options";
 import { reviewSortList } from "@/lib/constants";
+import { Review } from "@/lib/zod-schemas";
 
 export default function ReviewList({
   reviews,
   sort,
 }: {
-  reviews: ProductFull["reviews"];
+  reviews: Review[];
   sort?: string;
 }) {
-  let sortedReviews: ProductFull["reviews"];
+  let sortedReviews: Review[];
 
   if (sort) {
     sortedReviews =

@@ -9,8 +9,6 @@ const Account = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
-  console.log(user);
   return (
     <>
       {/* <div className="h-full flex justify-center items-center bg-amber-700"> */}

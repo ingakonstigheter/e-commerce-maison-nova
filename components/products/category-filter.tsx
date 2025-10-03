@@ -1,8 +1,8 @@
 "use client";
-import { allCategories } from "@/lib/constants";
+import { allCategories, menCategories, womenCategories } from "@/lib/constants";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
-import { menCategories, womenCategories } from "../../lib/constants";
+import {} from "../../lib/constants";
 import Link from "next/link";
 
 export default function CategoryFilter({ gender }: { gender: string }) {
@@ -12,8 +12,10 @@ export default function CategoryFilter({ gender }: { gender: string }) {
 
   let categories = allCategories;
 
-  if (gender !== "") {
-    categories = gender === "men" ? menCategories : womenCategories;
+  if (gender === "men") {
+    categories = menCategories;
+  } else if (gender === "women") {
+    categories = womenCategories;
   }
 
   function getLink(category: string) {

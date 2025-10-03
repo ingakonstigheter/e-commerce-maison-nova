@@ -26,7 +26,6 @@ export default function Searchbar({ globalSearch }: { globalSearch: boolean }) {
     <div className="grid [grid-template-columns:1fr] ">
       <div className="grid row-start-1 col-start-1 [grid-template-columns:1fr]">
         <label htmlFor="query" className="sr-only"></label>
-
         <input
           type="text"
           placeholder="Search..."

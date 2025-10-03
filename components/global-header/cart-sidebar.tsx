@@ -16,7 +16,6 @@ const CartSidebar = ({ cartIsOpen, setCartIsOpen }: CartSidebarProps) => {
   const decrementCartItem = userCartStore((state) => state.decrementCartItem);
   const router = useRouter();
   // const totalProducts = userCartStore((state) => state.getTotalProductCount());
-  console.log("Cart: ", cartList);
   // const showDecimals = cartItem.price > 1000 ? 0 : 2;
 
   const handleCheckout = () => {
@@ -49,7 +48,6 @@ const CartSidebar = ({ cartIsOpen, setCartIsOpen }: CartSidebarProps) => {
     return totalPriceOfProduct;
   };
 
-  console.log(getTotalPriceOfProducts());
   return (
     <div
       className={`fixed top-0 right-0 h-full w-[500px] p-3 bg-white shadow-md z-50 transform transition-transform duration-300 ${
