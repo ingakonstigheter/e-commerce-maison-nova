@@ -89,10 +89,42 @@ npm run dev
 ```
 |-- app/
 |  |-- page.tsx            # Startsida
-|  |-- about/page.tsx      # Om oss
+|  |-- about/              # Om oss
+|  |-- account/            # Användare
+|  |-- admin/              # Admin
+|     |-- admin-products/  # Produkt lista
+|        |-- [slug]/       # Specifik produkt
+|  |-- auth/               # Autentisering
+|  |-- cart/               # Kundvagn
+|  |-- confirmation/       # Registreringsbekräftelse
+|  |-- contact-us/         # Kontaka oss
+|  |-- error/              # Felhantering
+|  |-- login/              # Logga in
+|  |-- men/                # Man-avdelning
+|  |-- products/           # Produkt lista
+|     |-- [slug]/          # Specifika Produkter
+|  |-- signup/             # Registrering
+|  |-- women/              # Kvinno-avdelning
+|  |-- ...                 # globals, layout favicon
 |-- components/            # Återanvändbara komponenter                
-|
-|
+|  |-- account/            # Användare                 
+|  |-- banner/             # Banner 
+|  |-- error/              # Felhantering           
+|  |-- global-header/      # Header   
+|  |-- globals/            # Footer, searchbar       
+|  |-- products/           # Produkt komponenter
+|  |-- ui/                 # Lucide-komponenter             
+|  |-- ...                 # Ospecificerade komponenter
+|-- lib/                   # 
+|  |--data                 # Databashanterin
+|  |--generated/prisma/    # Prisma genererade filer
+|  |--stores/              # Kundkorg
+|  |--supabase/            # Supabase
+|-- prisma/                # Prisma
+|  |-- seedUtil/           # Util filer för seed av databas
+|-- public/                # Bilder
+|-- utils/supabase/        # Supabase autentisering
+
 ```
 
 ---
