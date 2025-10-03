@@ -1,11 +1,6 @@
 # 🛍️ E-handelsplattform i Next.js
 
-
-
  Byggd med **Next.js** och **TypeScript**, där produkter hanteras via **Supabase** och **Prisma**. Plattformen erbjuder sök- och filterfunktioner samt interaktiva inslag som kontaktformulär och dynamiska produktsidor.
-
-
-
 
 ---
 
@@ -21,8 +16,6 @@
 - 🤝 [Bidra](#-bidra)
 - 📚 [Lärdomar](#-lärdomar)
 - 📜 [Licens](#-licens)
-- ✍️ [Kontakt](#-kontakt)
-
 
 ---
 
@@ -47,7 +40,6 @@ Plattformen erbjuder bland annat:
 ✅ **Kontaktformulär** – fält med för- och efternamn, e-post, dropdown-meny för land samt meddelandefält.  
 ✅ **Om oss-sida** – information om företaget.  
 ✅ **Admin-sida** – administrera produkter via `/admin/admin-products` (nåbar via manuell sökväg).
-
 
 ---
 
@@ -176,10 +168,28 @@ Detta projekt är utvecklat i utbildningssyfte och är inte avsett för produkti
 
 ---
 
-## ✍️ Kontakt
+## 📌 Min reflektion
+### Mitt bidrag till projektet
 
+I projektet var jag framför allt ansvarig för produktflödet och adminfunktionerna. Jag byggde upp produktlistningen och de dynamiska produktsidorna där detaljer som pris, betyg och rabatt visas. Jag jobbade också med sökfunktionen samt filter- och sorteringslogik, så att användaren snabbt kunde hitta rätt produkt.
+En annan viktig del var admin-sidorna, där jag satte upp CRUD-funktionalitet för att kunna lägga till, uppdatera och ta bort produkter. Till en början hämtade jag produktdata via ett externt API, men senare flyttade jag över allt till **Supabase** och kopplade ihop det med **Prisma**. Jag implementerade även **Zod** för att validera indata och säkra att databasen bara fick korrekt information.
 
-- **Ali Z – Produkt- & Databasninja** – ali@example.com  
-- **Chris W – Admin-suverän & User-reglerare** – chris@example.com  
-- **Naseem Q – Checkout-mästare & Kontaktguru** – naseem@example.com  
-- **Nicole P – UI/UX-implementerare & CRUD-magiker** – nicole@example.com
+### Tekniker jag använde
+Under arbetets gång använde jag en blandning av både Server Components och Client Components, vilket gav mig en bättre förståelse för när det ena passar bättre än det andra. Jag jobbade också mycket med:
+
+- **Prisma & Supabase** för databas och queries.
+- **Zod** för validering.
+- useSearchParams, useFormAction och routing för sök, formulär och navigation.
+- State-hantering för att hålla koll på UI-logik.
+- **Tailwind** för responsiv design.
+
+Förutom det tekniska fick jag också mycket erfarenhet av **GitHub Projects** och versionshantering med **Git**, vilket gjorde samarbetet i gruppen mer strukturerat och agilt.
+
+### Vad jag skulle vilja utveckla vidare
+
+Om jag skulle fortsätta arbeta med projektet hade jag velat:
+- förbättra **SEO** för att göra plattformen mer synlig,
+- lägga in bättre felhantering och feedback till användaren,
+- använda mer Suspense för att hantera laddning på ett snyggare sätt,
+- koppla varukorgen till Stripe för en riktig checkout,
+- och utforska parallell routing ännu mer för att optimera prestanda.
