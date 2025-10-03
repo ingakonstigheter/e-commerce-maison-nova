@@ -20,7 +20,7 @@ const CartSidebar = ({ cartIsOpen, setCartIsOpen }: CartSidebarProps) => {
 
   const handleCheckout = () => {
     setCartIsOpen(false);
-    router.push("/Cart");
+    router.push("/cart");
   }
 
   const getNumbersOfProducts = () => {
