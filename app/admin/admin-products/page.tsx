@@ -1,12 +1,13 @@
 import DeleteButton from "@/components/products/delete-button";
 import { fetchAllProducts } from "@/lib/data/products";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import React from "react";
 
 export default async function Page() {
   const products = await fetchAllProducts();
 
-  if (!products) return console.error("Error");
+  if (!products) return notFound();
   return (
     <div className="grid w-full px-8 justify-center gap-4">
       <h2>Manage products</h2>

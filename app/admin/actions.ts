@@ -63,7 +63,7 @@ export async function updateOldProduct(
     price: parseFloat(priceString),
     images: parseCommaSeparareted(formData.get("images") as string),
     thumbnail: formData.get("thumbnail") as string,
-    rating: null,
+    rating: 0,
     discountPercentage: null,
   };
 

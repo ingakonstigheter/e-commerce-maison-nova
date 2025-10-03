@@ -1,7 +1,7 @@
 import { fetchAllProductsOfMultipleCategories } from "./seedUtil/products";
 import { allCategories, menCategories } from "./seedUtil/constants";
-import prisma from "@/lib/prisma";
-import { generateSlug } from "@/lib/utils";
+import { prisma } from "../lib/prisma";
+import { generateSlug } from "../lib/utils";
 
 async function allProducts() {
   try {
@@ -45,8 +45,7 @@ async function allProducts() {
       }
       productIdCounter++;
     }
-  } catch (e) {
-  }
+  } catch (e) {}
 }
 
 async function main() {

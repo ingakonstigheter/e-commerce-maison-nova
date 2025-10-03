@@ -1,6 +1,6 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { generateSlug } from "../utils";
 import { Product } from "../zod-schemas";
 

@@ -3,13 +3,13 @@ import Link from "next/link";
 import React from "react";
 
 export default function AllProductsLink({ gender }: { gender?: string }) {
-  let genderParam = "";
+  let genderParam = null;
   if (gender) {
     genderParam = gender !== "men" ? "women" : "men";
   }
   return (
     <Link
-      href={`/products${genderParam ? `?gender=${genderParam}` : ""}`}
+      href={`/products${genderParam !== null ? `?gender=${genderParam}` : ""}`}
       className="undescore flex p-0.5 items-center gap-2 hover:underline focus-visible:underline">
       Display all... <ArrowRight></ArrowRight>
     </Link>
